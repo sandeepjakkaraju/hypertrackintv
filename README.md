@@ -38,6 +38,10 @@ https://data.sfgov.org/Culture-and-Recreation/Film-Locations-in-San-Francisco/yi
 2. After successful deployment you will be able access the application on the below URL.
    http://localhost:8080/petclinic/
    
+# Bugs and Errors.
+1. Some of the movies can be shown placed out of SF Area. This is due to incomplete Address Information where the Google Geocoder gives you a wrong location.
+This can be fixed by limiting the geocoder to only SF Area. 
+
 # Screenshots
 ![Alt text](/1.png?raw=true "1")
 ![Alt text](/2.png?raw=true "2")
