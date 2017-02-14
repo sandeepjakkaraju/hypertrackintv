@@ -38,4 +38,6 @@ https://data.sfgov.org/Culture-and-Recreation/Film-Locations-in-San-Francisco/yi
 2. After successful deployment you will be able access the application on the below URL.
    http://localhost:8080/petclinic/
    
+# Screenshots
+![Alt text](/1.png?raw=true "1")
 
