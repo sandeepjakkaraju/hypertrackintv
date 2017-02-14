@@ -18,8 +18,24 @@ https://data.sfgov.org/Culture-and-Recreation/Film-Locations-in-San-Francisco/yi
 7. Used the jQuery UI Autocomplete Widget for Autocomplete search box.
 8. Used Google Maps JavaScript API to render the movies on the map.
 
+# If I had enough time and Other considerations.
 
+1. The data import job should ideally be a batch job. If can make use of any batch framework it would scale the import process. For now I am just reading the file using FileReader and importing into the database.
+2. The Movie search is based on only title of movie for now, but searching based on other parameters is a nice to have feature.
+3. Making the markers and map look pretty. This is a nice to have feature to make the markers and map look good.
+4. The Database I choose is the in-memory hsqldb for quick prototyping. A No-SQL based solution like SOLR search would increase the performance of the search functionality.
+5. A multi-page application instead of an Angular based SPA . This choice I made as I have not started on learning Angular. I did not want to waste time on learning Angular. 
+6. ** I have added maps in the petclinic application please see around other menu tabs also to see other features.
 
+# What I learnt from this assignment.
 
+1. How to use the Google Maps JavaScript API and also the Google Web Services API using Java.
+2. Working of an AutoCompletion widget.
 
+# Deploying the application.
+
+1. This project is a Maven project. Please import this project in a Eclipse or You can use the command line maven to build a war artifact for this project.
+2. After successful deployment you will be able access the application on the below URL.
+   http://localhost:8080/petclinic/
+   
 
