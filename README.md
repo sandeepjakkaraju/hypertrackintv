@@ -1,5 +1,4 @@
-# ChatRe !! 
-# Location Based Chat Application !!! 
+# SF Movies App
 
 
 
