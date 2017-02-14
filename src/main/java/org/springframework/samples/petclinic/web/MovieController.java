@@ -16,14 +16,14 @@
 package org.springframework.samples.petclinic.web;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.samples.petclinic.model.Hall;
 import org.springframework.samples.petclinic.model.Movie;
 import org.springframework.samples.petclinic.service.ClinicService;
@@ -59,15 +59,12 @@ public class MovieController {
 
     @RequestMapping(value = "/loadMovies", method = RequestMethod.GET)
     public  void load(HttpServletRequest request) throws ParseException, IOException {
-		
-    	//synchronized(this)
-    	{
-    	File f = new File("/Users/sandeep/Downloads/data.csv");
-		
-		FileReader fr = new FileReader(f);
-		BufferedReader bf = new BufferedReader(fr);
+    	{	
+		BufferedReader bf = new BufferedReader(new InputStreamReader(new ClassPathResource("data.csv").getInputStream()));
 		
 		String line = bf.readLine();
+		System.out.println(line);
+		
 		line = bf.readLine();
 		while (line != null)
 		{
