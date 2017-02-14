@@ -46,88 +46,80 @@ import com.vividsolutions.jts.io.ParseException;
 @Controller
 public class MovieController {
 
-    @Autowired
-    ClinicService impl;
+	@Autowired
+	ClinicService impl;
 
-    @RequestMapping(value = "/getMovies", method = RequestMethod.GET)
-    public  @ResponseBody List<Movie> initCreationForm(HttpServletRequest request) throws ParseException {
+	@RequestMapping(value = "/getMovies", method = RequestMethod.GET)
+	public @ResponseBody List<Movie> initCreationForm(HttpServletRequest request) throws ParseException {
 
-        System.out.println(request.getParameter("term"));
-        String inp = request.getParameter("term");
-        return impl.getMovies(inp);
-    }
+		System.out.println(request.getParameter("term"));
+		String inp = request.getParameter("term");
+		return impl.getMovies(inp);
+	}
 
-    @RequestMapping(value = "/loadMovies", method = RequestMethod.GET)
-    public  void load(HttpServletRequest request) throws ParseException, IOException {
-    	{	
-		BufferedReader bf = new BufferedReader(new InputStreamReader(new ClassPathResource("data.csv").getInputStream()));
-		
-		String line = bf.readLine();
-		System.out.println(line);
-		
-		line = bf.readLine();
-		while (line != null)
+	@RequestMapping(value = "/loadMovies", method = RequestMethod.GET)
+	public void load(HttpServletRequest request) throws ParseException, IOException {
 		{
-			String[] cols = line.split(",");
-			
-			if(cols.length == 2)
-			{
-			String title = cols[0].trim();	
-			String add = cols[1].trim();
-			if(!add.trim().equals("") && !title.trim().equals(""))
-			{
-			//GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyCvcFDeU-VUwZmOq0tOydJYdsMBQJ7txPk");
-			GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyBMADpfhEJsWT6Dfkpk7C703Gq-wTjjWt0");
-				
-			GeocodingResult[] results =null;
-			try {
-				results = GeocodingApi.geocode(context,add).await();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			if(results.length >0)
-			{
-			System.out.println(title);
-			System.out.println(results[0].formattedAddress);
-			System.out.println(results[0].geometry.location.lat+","+results[0].geometry.location.lng);
-			
-			List<Movie> ml = impl.getMovies(title);
-			
-			if(ml.size() >0)
-			{
-			Movie m = ml.get(0);
-			Hall mh = new Hall(add,""+results[0].geometry.location.lat,""+results[0].geometry.location.lng);
-			m.getHalls().add(mh);
-			MoviesDataImporter md = new MoviesDataImporter();
-			try {
-				impl.saveMovie(m);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			}
-			else
-			{
-				Movie m = new Movie(title);
-				Hall mh = new Hall(add,""+results[0].geometry.location.lat,""+results[0].geometry.location.lng);
-				m.getHalls().add(mh);
-				
-				MoviesDataImporter md = new MoviesDataImporter();
-				try {
-					impl.saveMovie(m);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			}
-			
-			}
-			}
+			BufferedReader bf = new BufferedReader(
+					new InputStreamReader(new ClassPathResource("data.csv").getInputStream()));
+
+			String line = bf.readLine();
+			System.out.println(line);
+
 			line = bf.readLine();
+			while (line != null) {
+				String[] cols = line.split(",");
+
+				if (cols.length >= 2) {
+					String title = cols[0].trim();
+					String add = cols[1].trim();
+					if (!add.trim().equals("") && !title.trim().equals("")) {
+						// GeoApiContext context = new
+						// GeoApiContext().setApiKey("AIzaSyCvcFDeU-VUwZmOq0tOydJYdsMBQJ7txPk");
+						GeoApiContext context = new GeoApiContext()
+								.setApiKey("AIzaSyBMADpfhEJsWT6Dfkpk7C703Gq-wTjjWt0");
+
+						GeocodingResult[] results = null;
+						try {
+							results = GeocodingApi.geocode(context, add).await();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+						if (results.length > 0) {
+							System.out.println(title);
+							System.out.println(results[0].formattedAddress);
+							System.out
+									.println(results[0].geometry.location.lat + "," + results[0].geometry.location.lng);
+
+							List<Movie> ml = impl.getMovies(title);
+
+							Movie m = null;
+							Hall mh = null;
+
+							if (ml.size() > 0) {
+								m = ml.get(0);
+								mh = new Hall(add, "" + results[0].geometry.location.lat,
+										"" + results[0].geometry.location.lng);
+							} else {
+								m = new Movie(title);
+								mh = new Hall(add, "" + results[0].geometry.location.lat,
+										"" + results[0].geometry.location.lng);
+							}
+
+							m.getHalls().add(mh);
+							try {
+								impl.saveMovie(m);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+
+						}
+					}
+				}
+				line = bf.readLine();
+			}
 		}
-    }
-    }
+	}
 }
