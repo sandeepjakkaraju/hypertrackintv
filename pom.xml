@@ -304,20 +304,7 @@
 			<artifactId>google-maps-services</artifactId>
 			<version>0.1.17</version>
 		</dependency>
-
-		<dependency>
-			<groupId>org.easybatch</groupId>
-			<artifactId>easybatch-core</artifactId>
-			<version>5.0.0</version>
-		</dependency>
-
-
-		<dependency>
-			<groupId>org.easybatch</groupId>
-			<artifactId>easybatch-jpa</artifactId>
-			<version>5.0.0</version>
-		</dependency>
-
+ 
 	</dependencies>
 
 
