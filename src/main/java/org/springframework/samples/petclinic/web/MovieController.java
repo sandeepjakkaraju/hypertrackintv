@@ -60,7 +60,7 @@ public class MovieController {
     @RequestMapping(value = "/loadMovies", method = RequestMethod.GET)
     public  void load(HttpServletRequest request) throws ParseException, IOException {
 		
-    	synchronized(this)
+    	//synchronized(this)
     	{
     	File f = new File("/Users/sandeep/Downloads/data.csv");
 		
